@@ -1,7 +1,6 @@
-import "./App.css";
 import styled from "@emotion/styled";
 import ImageCrypto from "./img/logo.png";
-import Formulario from "./componentes/Formulario";
+import Formulario from "./components/Formulario";
 
 function App() {
   const Contenedor = styled.div`
@@ -35,9 +34,8 @@ function App() {
   return (
     <Contenedor>
       <Imagen src={ImageCrypto} alt="Es una imagen de crypto" />
-      <Heading>
-        CryptoMania <Formulario />
-      </Heading>
+      <Heading>CryptoMania</Heading>
+      <Formulario />
     </Contenedor>
   );
 }

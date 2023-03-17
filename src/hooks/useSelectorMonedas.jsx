@@ -8,13 +8,12 @@ const useSelectorMonedas = (label, divisas) => {
     display: block;
     font-size: 24px;
     font-weight: 700;
-    margin-top: 30px;
+    margin-top: 20px;
   `;
 
   const Select = styled.select`
     background-color: #9497ff;
     width: 100%;
-    text-align: center;
     padding: 10px;
     justify-content: center;
     color: white;

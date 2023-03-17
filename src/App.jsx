@@ -7,6 +7,10 @@ function App() {
     max-width: 900px;
     margin: 0 auto;
     width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100dvh;
     @media (min-width: 992px) {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -17,25 +21,23 @@ function App() {
   const Imagen = styled.img`
     max-width: 400px;
     width: 80%;
-    margin: 100px auto 0 auto;
+    margin: auto;
     display: block;
   `;
 
   const Heading = styled.h1`
     font-family: "Ubuntu", sans-serif;
     color: #fff;
-    text-align: center;
     font-weight: 700;
-    margin-top: 700;
-    margin-bottom: 50px;
     font-size: 34px;
   `;
 
   return (
     <Contenedor>
       <Imagen src={ImageCrypto} alt="Es una imagen de crypto" />
-      <Heading>CryptoMania</Heading>
-      <Formulario />
+      <Heading>
+        CryptoMania <Formulario />
+      </Heading>
     </Contenedor>
   );
 }

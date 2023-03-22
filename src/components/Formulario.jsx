@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import useSelectorMonedas from "../hooks/useSelectorMonedas";
 import { monedas } from "../data/monedas";
 import Error from "./Error";
+import Data from "./Data";
 
 const InputSubmit = styled.input`
   background-color: #9497ff;
@@ -26,11 +27,13 @@ const InputSubmit = styled.input`
 const Formulario = () => {
   const [cryptos, setCryptos] = useState([]);
   const [error, setError] = useState(false);
+  const [datos, setDatos] = useState({});
+  const [consulta, setConsulta] = useState(false);
   const [moneda, SelectorMonedas] = useSelectorMonedas(
     "Elige tu moneda",
     monedas
   );
-  const [crypto, SelectorCryptos] = useSelectorMonedas(
+  const [cryptoMoneda, SelectorCryptos] = useSelectorMonedas(
     "Elige tu crypto",
     cryptos
   );
@@ -38,7 +41,7 @@ const Formulario = () => {
   useEffect(() => {
     const consultarApi = async () => {
       const url =
-        "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=20&tsym=USD";
+        "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=10&tsym=USD";
       const respuesta = await fetch(url);
       const resultado = await respuesta.json();
 
@@ -51,28 +54,42 @@ const Formulario = () => {
     consultarApi();
   }, []);
 
-  const manejadorSubmit = (e) => {
+  const manejadorSubmit = async (e) => {
     e.preventDefault();
-    if ([moneda, crypto].includes("")) {
-      console.error("ERROR");
+    if (
+      [moneda, cryptoMoneda].includes("") ||
+      [moneda, cryptoMoneda].includes("Seleccione una divisa")
+    ) {
       setError(true);
+      setConsulta(false);
       return;
     }
-    console.log("Se envio el formulario");
-    console.log(moneda);
-    console.log(crypto);
+    const url = `https://min-api.cryptocompare.com/data/top/mktcapfull?limit=10&tsym=${moneda}`;
+    const respuesta = await fetch(url);
+    const resultado = await respuesta.json();
+    const objetoCrypto = resultado.Data.find(
+      (crypto) => crypto.CoinInfo.Name === cryptoMoneda
+    );
+    const objetoData = objetoCrypto.DISPLAY[moneda];
+    setDatos({
+      precioAhora: objetoData.PRICE,
+      precioBajo: objetoData.LOWDAY,
+      precioInicio: objetoData.OPENDAY,
+    });
     setError(false);
+    setConsulta(true);
   };
 
   return (
-    <>
+    <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
       {error && <Error>Todos los campos son obligatorios</Error>}
       <form onSubmit={manejadorSubmit}>
         <SelectorMonedas />
         <SelectorCryptos />
         <InputSubmit type="submit" value="convertir" />
       </form>
-    </>
+      {consulta && <Data data={datos} />}
+    </div>
   );
 };
 

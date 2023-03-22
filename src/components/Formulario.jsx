@@ -75,13 +75,21 @@ const Formulario = () => {
       precioAhora: objetoData.PRICE,
       precioBajo: objetoData.LOWDAY,
       precioInicio: objetoData.OPENDAY,
+      imagen: objetoCrypto.CoinInfo.ImageUrl,
     });
     setError(false);
     setConsulta(true);
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        alignItems: "center",
+      }}
+    >
       {error && <Error>Todos los campos son obligatorios</Error>}
       <form onSubmit={manejadorSubmit}>
         <SelectorMonedas />

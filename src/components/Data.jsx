@@ -5,25 +5,39 @@ const Datos = styled.div`
   background-color: #4361ee;
   color: #fff;
   padding: 15px;
-  font-size: 12px;
+  font-size: 10px;
+  align-items: center;
   font-weight: 700;
   margin-top: 10px;
+  width: auto;
+  min-width: 100%;
   display: flex;
   flex-direction: row;
   border-radius: 20px;
   margin-top: 50px;
 `;
 
-const Imagen = styled.div`
-  height: 100%;
-  align-items: center;
-  width: 25%;
+const Imagen = styled.img`
+  max-width: 400px;
+  width: 30%;
+  margin: auto;
+  margin-right: 10px;
+  display: block;
+  @media (max-width: 992px) {
+    margin-top: 50px;
+    margin: 0;
+    margin-right: 20px;
+  }
 `;
 
 const Data = ({ data }) => {
-  const { precioAhora, precioInicio, precioBajo } = data;
+  const { precioAhora, precioInicio, precioBajo, imagen } = data;
   return (
     <Datos>
+      <Imagen
+        src={`https://cryptocompare.com${imagen}`}
+        alt="Es una imagen de crypto"
+      />
       <div style={{ width: "100%" }}>
         <h1>
           Ahora:{" "}
